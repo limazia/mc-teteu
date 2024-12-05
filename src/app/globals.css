@@ -8,7 +8,26 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #65a5a4;
-  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 0;
+  scrollbar-width: 3px;
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .canvas {
@@ -19,7 +38,7 @@ body {
   position: relative;
   background-color: #aeebdd;
   border-radius: 6px;
-  box-shadow: 0px 0px 52px -10px rgba(23,102,90,1);
+  box-shadow: 0px 0px 52px -10px rgba(23, 102, 90, 1);
 }
 
 .house {
@@ -64,7 +83,7 @@ body {
 }
 
 .front .b {
-  clip-path: polygon(61.70% 3px, 8.28% 104.6%, -11px 101.62%, 44.48% -6px);
+  clip-path: polygon(61.7% 3px, 8.28% 104.6%, -11px 101.62%, 44.48% -6px);
   background-color: #77545c;
   position: absolute;
   right: -9px;
@@ -76,7 +95,7 @@ body {
 }
 
 .front .c {
-clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
+  clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   height: 370px;
   width: 280px;
   background-color: #8e4940;
@@ -95,7 +114,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   bottom: 0;
   border-radius: 50%;
   box-shadow: 0 0 0 3px #a95b41 inset, 0 0 0 4px rgba(65, 10, 34, 0.25) inset;
-  
+
   &:after {
     content: "";
     position: absolute;
@@ -106,8 +125,8 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     left: 5px;
     top: 5px;
   }
-  
-   &:before {
+
+  &:before {
     content: "";
     position: absolute;
     border: 1px solid rgba(65, 10, 34, 0.25);
@@ -117,7 +136,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     left: 7px;
     top: 7px;
   }
-  
+
   &:nth-of-type(2) {
     left: 170px;
   }
@@ -146,7 +165,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   left: 170px;
   background-color: #410a22;
   z-index: 1;
-  transform:skew(-30deg);
+  transform: skew(-30deg);
 }
 
 .front .e {
@@ -171,23 +190,31 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   left: 10px;
   width: 10px;
   height: 38px;
-  background-color: rgba(#4d323e ,.45);
-  box-shadow: 15px 0 0 0 rgba(#4d323e ,.45);
+  background-color: rgba(#4d323e, 0.45);
+  box-shadow: 15px 0 0 0 rgba(#4d323e, 0.45);
 }
 
-.front .e:after { top: 10px; }
-.front .e:before { top: 60px; }
+.front .e:after {
+  top: 10px;
+}
+.front .e:before {
+  top: 60px;
+}
 
 .front .k {
   position: absolute;
-  border:  2px solid #4d323e;
+  border: 2px solid #4d323e;
   width: 40px;
   height: 60px;
   top: 150px;
   left: 132px;
-  background: linear-gradient(118deg, rgba(225,150,96,1) 12%, rgba(253,213,141,1) 65%);
+  background: linear-gradient(
+    118deg,
+    rgba(225, 150, 96, 1) 12%,
+    rgba(253, 213, 141, 1) 65%
+  );
   box-shadow: 2px 2px 0 inset #8f4b41;
-  
+
   &:after {
     content: "";
     position: absolute;
@@ -198,7 +225,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     background-color: #4d323e;
     box-shadow: 0 16px 0 #4d323e, 0 32px 0 #4d323e;
   }
-  
+
   &:before {
     content: "";
     position: absolute;
@@ -217,8 +244,12 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   clip-path: polygon(20px 1px, 67.61% 5px, 100% 100%, 31.53% 100.54%);
   top: 0;
   left: 120px;
-  background: linear-gradient(200deg, rgba(187,46,45,1) 12%, rgba(122,52,60,1) 98%);
-  
+  background: linear-gradient(
+    200deg,
+    rgba(187, 46, 45, 1) 12%,
+    rgba(122, 52, 60, 1) 98%
+  );
+
   &:after {
     content: "";
     position: absolute;
@@ -229,10 +260,11 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     left: 140px;
     top: 0;
     transform: skew(20deg);
-    box-shadow: 6px 0 0, 60px 0 0, 66px 0 0, 120px 0 0, 126px 0 0, 180px 0 0, 186px 0 0;
+    box-shadow: 6px 0 0, 60px 0 0, 66px 0 0, 120px 0 0, 126px 0 0, 180px 0 0,
+      186px 0 0;
     z-index: -1;
   }
-  
+
   &:before {
     content: "";
     position: absolute;
@@ -262,7 +294,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   right: 3px;
   top: 0;
   clip-path: polygon(50% 30%, 0% 100%, 100% 100%);
-  
+
   &:after {
     content: "";
     width: 100%;
@@ -272,7 +304,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     top: 41px;
     left: 0;
   }
- 
+
   &:before {
     content: "";
     width: 3px;
@@ -291,7 +323,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   width: 100%;
   height: 100%;
   transform: rotate(25deg);
-  background-color: rgba(0,0,0,.15);
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .w-outer {
@@ -330,7 +362,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   background-color: #f6f5ff;
   transform: rotate(25deg);
   z-index: 2;
-  
+
   &:after {
     content: "";
     position: absolute;
@@ -364,7 +396,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   width: 200px;
   background-color: #edf1f7;
   z-index: 1;
- 
+
   border-radius: 80% 65%;
 }
 
@@ -374,61 +406,61 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   left: 0;
   width: 100%;
   height: 50px;
-  background-color:#f6f5ff;
+  background-color: #f6f5ff;
   z-index: 1;
 }
 
 .tree {
   position: absolute;
   clip-path: polygon(50% 0%, 15% 100%, 88% 100%);
-  width:300px;
+  width: 300px;
   height: 700px;
-  
+
   &:nth-child(1) {
     background-color: #17665a;
     top: -160px;
     left: -114px;
   }
-  
+
   &:nth-child(2) {
     background-color: #024b41;
     top: -100px;
     left: -60px;
     z-index: 1;
   }
-  
+
   &:nth-child(3) {
     background-color: #339580;
     top: 50px;
     left: 40px;
   }
-  
+
   &:nth-child(4) {
     background-color: #1c6f61;
     top: -100px;
     left: 170px;
     z-index: 1;
   }
-  
+
   &:nth-child(5) {
     background-color: #339580;
     top: -20px;
     left: 240px;
     z-index: 0;
   }
-  
+
   &:nth-child(6) {
     background-color: #339580;
     top: -20px;
     left: 460px;
   }
-  
+
   &:nth-child(7) {
     background-color: #17665a;
     top: 120px;
     left: 560px;
   }
-  
+
   &:nth-child(8) {
     background-color: #024b41;
     top: 300px;
@@ -436,7 +468,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     z-index: 3;
     width: 400px;
   }
-  
+
   &:nth-child(9) {
     background-color: #024b41;
     top: 440px;
@@ -444,7 +476,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     z-index: 3;
     width: 500px;
   }
-  
+
   &:nth-child(10) {
     background-color: #0c332d;
     top: 300px;
@@ -452,13 +484,13 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     z-index: 3;
     width: 500px;
   }
-  
+
   &:nth-child(11) {
     background-color: #26816f;
     top: 0px;
     left: 640px;
   }
-  
+
   &:nth-child(12) {
     background-color: #26816f;
     top: -40px;
@@ -468,7 +500,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
 
 .snowing {
   position: absolute;
-  filter: blur(.8px);
+  filter: blur(0.8px);
   z-index: 3;
   width: 100%;
   height: 100%;
@@ -485,62 +517,62 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   animation-timing-function: linear, ease-in-out;
   animation-iteration-count: infinite, infinite;
   top: -100%;
-  
+
   &:nth-child(1) {
     left: 210px;
     top: -40px;
-    animation-delay: 9s, .3s;
+    animation-delay: 9s, 0.3s;
   }
   &:nth-child(2) {
     left: 400px;
     top: -50px;
-    animation-delay: 6s, .3s;
+    animation-delay: 6s, 0.3s;
   }
   &:nth-child(3) {
     left: 720px;
     top: -130px;
-    animation-delay: 8s, .3s;
+    animation-delay: 8s, 0.3s;
   }
   &:nth-child(4) {
     left: 140px;
-    animation-delay: 10s, .3s;
+    animation-delay: 10s, 0.3s;
   }
   &:nth-child(5) {
     left: 500px;
-    animation-delay: 7s, .2s;
+    animation-delay: 7s, 0.2s;
   }
   &:nth-child(6) {
     left: 150px;
     top: -30px;
-    animation-delay: 5.2s, .3s;
+    animation-delay: 5.2s, 0.3s;
   }
   &:nth-child(7) {
     left: 200px;
     top: -20px;
-    animation-delay: 3.4s, .3s;
+    animation-delay: 3.4s, 0.3s;
   }
   &:nth-child(8) {
     left: 70px;
     top: -330px;
-    animation-delay: 6.6s, .3s;
+    animation-delay: 6.6s, 0.3s;
   }
   &:nth-child(9) {
     left: 380px;
     top: -90px;
-    animation-delay: 5.6s, .3s;
+    animation-delay: 5.6s, 0.3s;
   }
   &:nth-child(10) {
     left: 130px;
-    animation-delay: 11s, .2s;
+    animation-delay: 11s, 0.2s;
   }
   &:nth-child(11) {
     left: 20px;
-    animation-delay: 10.5s, .3s;
+    animation-delay: 10.5s, 0.3s;
   }
   &:nth-child(12) {
     left: 620px;
     top: -40px;
-    animation-delay: 8s, .3s;
+    animation-delay: 8s, 0.3s;
   }
   &:nth-child(13) {
     left: 400px;
@@ -550,17 +582,17 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   &:nth-child(14) {
     left: 500px;
     top: -370px;
-    animation-delay: 6s, .3s;
+    animation-delay: 6s, 0.3s;
   }
   &:nth-child(15) {
     left: 660px;
     top: -20px;
-    animation-delay: 9s, .3s;
+    animation-delay: 9s, 0.3s;
   }
   &:nth-child(16) {
     left: 610px;
     top: -80px;
-    animation-delay: 7.3s, .3s;
+    animation-delay: 7.3s, 0.3s;
   }
   &:nth-child(17) {
     left: 20px;
@@ -570,17 +602,17 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   &:nth-child(18) {
     left: 670px;
     top: -200px;
-    animation-delay: 6.5s, .6s;
+    animation-delay: 6.5s, 0.6s;
   }
   &:nth-child(19) {
     left: 210px;
     top: -120px;
-    animation-delay: 4s, .3s;
+    animation-delay: 4s, 0.3s;
   }
   &:nth-child(20) {
     left: 20px;
     top: -110px;
-    animation-delay: -1.1s, -.1s;
+    animation-delay: -1.1s, -0.1s;
   }
 }
 
@@ -595,7 +627,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   animation-timing-function: linear, ease-in-out;
   animation-iteration-count: infinite, infinite;
   top: -100%;
-  
+
   &:nth-child(1) {
     left: 300px;
     top: -420px;
@@ -603,7 +635,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   }
   &:nth-child(2) {
     left: 530px;
-    animation-delay: .2s, .1s;
+    animation-delay: 0.2s, 0.1s;
   }
   &:nth-child(3) {
     left: 340px;
@@ -618,7 +650,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   &:nth-child(5) {
     left: 400px;
     top: -150px;
-    animation-delay: 8.4s, .3s;
+    animation-delay: 8.4s, 0.3s;
   }
   &:nth-child(6) {
     left: 720px;
@@ -647,7 +679,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   &:nth-child(11) {
     left: 220px;
     top: -530px;
-    animation-delay: .6s, 3s;
+    animation-delay: 0.6s, 3s;
   }
   &:nth-child(12) {
     left: 630px;
@@ -661,7 +693,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   }
   &:nth-child(14) {
     left: 580px;
-    animation-delay: 2s, .3s;
+    animation-delay: 2s, 0.3s;
   }
   &:nth-child(15) {
     left: 420px;
@@ -670,7 +702,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   }
   &:nth-child(16) {
     left: 360px;
-    animation-delay: 8s, .3s;
+    animation-delay: 8s, 0.3s;
   }
   &:nth-child(17) {
     left: 90px;
@@ -685,7 +717,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   &:nth-child(19) {
     left: 150px;
     top: -490px;
-    animation-delay: 6.5s, .1s;
+    animation-delay: 6.5s, 0.1s;
   }
   &:nth-child(20) {
     left: 640px;
@@ -720,7 +752,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   width: 100%;
   height: 40px;
   top: 20px;
-  
+
   &:before {
     content: "";
     position: absolute;
@@ -731,7 +763,7 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     top: 0px;
     left: 40px;
   }
-  
+
   &:after {
     content: "";
     position: absolute;
@@ -751,151 +783,151 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
   width: 28px;
   height: 24px;
   z-index: 3;
-  
+
   &:nth-child(1) {
     top: 300px;
     left: 20px;
     background-color: #26816f;
   }
-  
+
   &:nth-child(2) {
     top: 100px;
     left: 46px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(3) {
     top: 180px;
     left: 154px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(4) {
     top: 120px;
     left: 274px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(5) {
     top: 100px;
     left: 358px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(6) {
     top: 180px;
     left: 570px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(7) {
     top: 90px;
     left: 576px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(8) {
     top: 220px;
     left: 680px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(9) {
     top: 280px;
     left: 670px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(10) {
     top: 380px;
     left: 660px;
     background-color: #339580;
   }
-  
+
   &:nth-child(11) {
     top: 420px;
     left: 674px;
     background-color: #17665a;
   }
-  
+
   &:nth-child(12) {
     top: 360px;
     left: 680px;
     background-color: #17665a;
   }
-  
+
   &:nth-child(13) {
     top: 360px;
     left: 680px;
     background-color: #17665a;
   }
-  
+
   &:nth-child(14) {
     top: 200px;
     left: 750px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(15) {
     top: 110px;
     left: 760px;
     background-color: #aeebdd;
   }
-  
+
   &:nth-child(16) {
     top: 340px;
     left: 730px;
     background-color: #17665a;
   }
-  
+
   &:nth-child(17) {
     top: 440px;
     left: 760px;
     background-color: #26816f;
   }
-  
+
   &:nth-child(18) {
     top: 150px;
     left: 410px;
     background-color: #aeebdd;
     transform: rotate(180deg);
   }
-  
+
   &:nth-child(19) {
     top: 70px;
     left: 336px;
     background-color: #aeebdd;
     transform: rotate(180deg);
   }
-  
+
   &:nth-child(20) {
     top: 130px;
     left: 120px;
     background-color: #aeebdd;
     transform: rotate(180deg);
   }
-  
+
   &:nth-child(21) {
     top: 330px;
     left: 146px;
     background-color: #339580;
     transform: rotate(180deg);
   }
-  
+
   &:nth-child(22) {
     top: 260px;
     left: 210px;
     background-color: #aeebdd;
     transform: rotate(180deg);
   }
-  
+
   &:nth-child(23) {
     top: 260px;
     left: 644px;
     background-color: #aeebdd;
     transform: rotate(180deg);
   }
-  
+
   &:nth-child(24) {
     top: 120px;
     left: 620px;
@@ -903,7 +935,6 @@ clip-path: polygon(53.87% 20.38%, 18% 100%, 86.29% 99.73%);
     transform: rotate(180deg);
   }
 }
-
 
 /*
 @media screen and (max-width: 840px) {

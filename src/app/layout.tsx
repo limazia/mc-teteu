@@ -8,26 +8,27 @@ import { ClientOnly } from "@/components/client-only";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "MC Teteu",
-  description: "Apenas um gerador tranquilo de um cara tranquilo",
+  title: "MC Teteu no Natal",
+  description: "Faltam poucos dias para o MC Teteu descongelar!",
   icons: {
     icon: "/favicon.ico",
   },
-  metadataBase: new URL("https://guy-chill.vercel.app"),
+  metadataBase: new URL("https://www.teteu.site"),
   openGraph: {
-    title: "MC Teteu",
-    description: "Apenas um gerador tranquilo de um cara tranquilo",
-    url: "https://guy-chill.vercel.app",
+    title: "MC Teteu no Natal",
+    description: "Faltam poucos dias para o MC Teteu descongelar!",
+    url: "https://www.teteu.site",
     images: "/og-image.png",
     type: "website",
     locale: "pt_BR",
   },
   robots: {
-    index: false,
+    index: true,
     follow: true,
     nocache: true,
   },
 };
+
 
 export default function RootLayout({
   children,
@@ -37,11 +38,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased">
-        <ClientOnly>
-          <main className="w-full min-h-screen h-full py-32 flex flex-col items-center justify-center">
-            {children}
-          </main>
-        </ClientOnly>
+        <ClientOnly>{children}</ClientOnly>
       </body>
     </html>
   );

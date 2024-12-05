@@ -18,7 +18,7 @@ export function AudioPlayer() {
 
   return (
     <div className="w-full flex flex-col items-center p-6 bg-white rounded-md space-y-4">
-      <span className="text-2xl font-bold">MC Teteu - Dingo Bell</span>
+      <span className="text-2xl font-bold text-center">MC Teteu - Dingo Bell</span>
 
       <audio ref={audioRef} src="teteu.mp3" className="mb-4" />
 

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 import { Background } from "@/components/background";
 import { AudioPlayer } from "@/components/audio-player";
-import { ConfettiExplosion } from "@/components/confetti-explosion";
 
 export default function HomePage() {
   const [currentDay, setCurrentDay] = useState<number>(new Date().getDate());
@@ -30,15 +29,13 @@ export default function HomePage() {
       <Background currentDay={currentDay} />
 
       <div className="text-center pb-10">
-        {isChristmas && <ConfettiExplosion />}
-
         <h1 className="text-black text-3xl font-medium uppercase">
           {isChristmas ? (
             "Feliz Natal!"
           ) : (
             <>
               Faltam <b>{daysUntilChristmas}</b> dias para o Mc Teteu
-              descongelar!
+              descongelar! 🎤❄️
             </>
           )}
         </h1>

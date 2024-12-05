@@ -20,5 +20,5 @@ export const images: { [key: number]: string } = {
   22: "8fccca7b-61de-405a-9768-e3234f631166",
   23: "d2fdebfe-c122-4c06-85f1-c712a3461456",
   24: "ad3f6368-d17e-4346-bc91-e9917a0d90bc",
-  25: "f36d0a4e-b639-42eb-8af3-ca73942fb6d3",
+  25: "happy-christmas",
 };

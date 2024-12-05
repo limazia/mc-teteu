@@ -29,7 +29,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,8 +36,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
-      <body className="antialiased">
-        <ClientOnly>{children}</ClientOnly>
+      <body className="antialiased flex flex-col justify-center items-center">
+        <ClientOnly>
+          <main className="flex flex-col items-center justify-center px-14 max-w-4xl">
+            {children}
+          </main>
+        </ClientOnly>
       </body>
     </html>
   );

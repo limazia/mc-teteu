@@ -1,7 +1,7 @@
 import Confetti from "react-confetti-explosion";
 import useWindowSize from "react-use/lib/useWindowSize";
 
-export function ConfettiExplosion() {
+export function AAAAAAAA() {
   const { width, height } = useWindowSize();
 
   const bigExplodeProps = {

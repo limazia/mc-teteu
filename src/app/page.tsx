@@ -31,7 +31,7 @@ export default function HomePage() {
       <div className="text-center pb-10">
         <h1 className="text-black text-3xl font-medium uppercase">
           {isChristmas ? (
-            "Feliz Natal!"
+            "Feliz Natal! 🍗🎉"
           ) : (
             <>
               Faltam <b>{daysUntilChristmas}</b> dias para o Mc Teteu

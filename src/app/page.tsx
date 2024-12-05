@@ -1,51 +1,45 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 import { Background } from "@/components/background";
-import { motion } from "framer-motion";
+import { AudioPlayer } from "@/components/audio-player";
+import { ConfettiExplosion } from "@/components/confetti-explosion";
 
 export default function HomePage() {
+  const [currentDay, setCurrentDay] = useState<number>(new Date().getDate());
+  const [daysUntilChristmas, setDaysUntilChristmas] = useState<number>(
+    25 - currentDay
+  );
+  const [isChristmas, setIsChristmas] = useState<boolean>(false);
+
+  useEffect(() => {
+    const today = new Date().getDate();
+    setCurrentDay(today);
+    setDaysUntilChristmas(25 - today);
+
+    if (today === 25) {
+      setIsChristmas(true);
+    }
+  }, []);
+
   return (
-    <>
-      <div className="relative">
-        <Background />
-        <motion.div
-          className="absolute overflow-hidden bottom-0 z-50"
-          initial={{ filter: "blur(20px)", opacity: 0 }}
-          animate={{ filter: "blur(0px)", opacity: 1 }}
-          transition={{
-            duration: 2,
-            ease: "easeOut",
-            repeatType: "mirror",
-          }}
-        >
-          <motion.img
-            src="teteu.png" // Substitua pelo seu caminho de imagem
-            alt="Descongelando"
-            className="w-full h-full object-cover"
-            initial={{ filter: "contrast(0.5) brightness(0.5)" }}
-            animate={{
-              filter: "contrast(1) brightness(1)",
-            }}
-            transition={{ duration: 2, ease: "easeOut" }}
-          />
-          <motion.div
-            className="absolute inset-0 bg-white"
-            initial={{ height: "100%" }}
-            animate={{ height: "0%" }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-          />
-        </motion.div>
+    <div className="w-full space-y-12 mt-72">
+      <AudioPlayer />
+
+      <div className="w-full">
+        <Background currentDay={currentDay} />
       </div>
 
-      <div className="w-full p-4 bg-transparent border-2 text-center mt-12 rounded-md">
-        <a
-          href="https://youtu.be/mMo8DvW9DP8?t=6"
-          target="_blank"
-          className="text-white text-2xl font-bold"
-        >
-          MC Teteu - Dingo Bell
-        </a>
+      <div className="text-center pb-12">
+        {isChristmas && <ConfettiExplosion />}
+
+        <h1 className="text-white text-3xl font-medium uppercase">
+          {isChristmas
+            ? "Feliz Natal!"
+            : <>Faltam <b>{daysUntilChristmas}</b> dias para o Mc Teteu descongelar!</>}
+        </h1>
       </div>
-    </>
+    </div>
   );
 }

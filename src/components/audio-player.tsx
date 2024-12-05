@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Play, Pause, Volume2 } from "lucide-react";
 
 export function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -16,18 +17,14 @@ export function AudioPlayer() {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 bg-white rounded-md shadow-md">
-      <span className="text-2xl font-bold mb-4">MC Teteu - Dingo Bell</span>
+    <div className="w-full flex flex-col items-center p-6 bg-white rounded-md space-y-4">
+      <span className="text-2xl font-bold">MC Teteu - Dingo Bell</span>
 
-      <audio
-        ref={audioRef}
-        src="teteu.mp3"
-        className="mb-4"
-      />
+      <audio ref={audioRef} src="teteu.mp3" className="mb-4" />
 
       <button
         onClick={togglePlay}
-        className="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+        className="flex items-center gap-1.5 px-6 py-2 bg-blue-500 text-white rounded-full transition ease-linear duration-300 hover:bg-blue-600"
       >
         {isPlaying ? "Pausar" : "Tocar"}
       </button>

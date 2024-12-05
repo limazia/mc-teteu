@@ -1,6 +1,14 @@
-export function Background() {
+import { motion } from "framer-motion";
+
+import { images } from "@/utils/images";
+
+interface BackgroundProps {
+  currentDay: number;
+}
+
+export function Background({ currentDay }: BackgroundProps) {
   return (
-    <div className="canvas">
+    <div className="canvas relative">
       <div className="snowing">
         <div className="small-snow">
           <div className="small"></div>
@@ -60,39 +68,29 @@ export function Background() {
       <div className="tree"></div>
       <div className="tree"></div>
       <div className="tree"></div>
-      <div className="tree-parts">
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-        <div className="tree-part"></div>
-      </div>
-      <div className="house">
+      <div className="house relative">
+        <motion.div
+          className="relative right-[130px] w-full h-full"
+          initial={{ filter: "blur(20px)", opacity: 0 }}
+          animate={{ filter: "blur(0px)", opacity: 1 }}
+          transition={{
+            duration: 2,
+            ease: "easeOut",
+            repeatType: "mirror",
+          }}
+        >
+          <motion.img
+            src={`${images[currentDay]}.png`}
+            alt="MC Teteu"
+            className="teteu w-full h-96 object-contain"
+            initial={{ filter: "contrast(0.5) brightness(0.5)" }}
+            animate={{
+              filter: "contrast(1) brightness(1)",
+            }}
+            transition={{ duration: 2, ease: "easeOut" }}
+          />
+        </motion.div>
+
         <div className="front">
           <div className="a"></div>
           <div className="b"></div>

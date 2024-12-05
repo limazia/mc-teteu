@@ -1,0 +1,23 @@
+{
+  "name": "ice",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "create:image": "tsx watch -r tsconfig-paths/register src/create-image.ts",
+    "create:list": "tsx watch -r tsconfig-paths/register src/create-list.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "@types/progress": "^2.0.7",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.15.7",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "progress": "^2.0.3",
+    "sharp": "^0.33.5",
+    "uuid": "^11.0.3"
+  }
+}

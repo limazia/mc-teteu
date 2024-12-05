@@ -24,20 +24,23 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="w-full space-y-12 mt-72">
+    <div className="flex flex-col items-center space-y-6 py-12">
       <AudioPlayer />
 
-      <div className="w-full">
-        <Background currentDay={currentDay} />
-      </div>
+      <Background currentDay={currentDay} />
 
-      <div className="text-center pb-12">
+      <div className="text-center pb-10">
         {isChristmas && <ConfettiExplosion />}
 
-        <h1 className="text-white text-3xl font-medium uppercase">
-          {isChristmas
-            ? "Feliz Natal!"
-            : <>Faltam <b>{daysUntilChristmas}</b> dias para o Mc Teteu descongelar!</>}
+        <h1 className="text-black text-3xl font-medium uppercase">
+          {isChristmas ? (
+            "Feliz Natal!"
+          ) : (
+            <>
+              Faltam <b>{daysUntilChristmas}</b> dias para o Mc Teteu
+              descongelar!
+            </>
+          )}
         </h1>
       </div>
     </div>

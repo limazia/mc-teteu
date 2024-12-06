@@ -1,7 +1,5 @@
 "use server";
 
-import { format } from "date-fns-tz";
-
 type ChristmasInfo = {
   currentDay: number;
   daysUntilChristmas: number;
@@ -10,12 +8,13 @@ type ChristmasInfo = {
 
 export async function getChristmasInfo(): Promise<ChristmasInfo> {
   const nowUtc = new Date();
-  const formattedDate = format(nowUtc, "yyyy-MM-dd HH:mm:ssXXX", {
-    timeZone: "America/Sao_Paulo",
-  });
-  const currentDate = new Date(formattedDate);
+  const timezone = "America/Sao_Paulo";
 
-  const currentDay = currentDate.getDate();
+  const localTime = new Date(
+    nowUtc.toLocaleString("en-US", { timeZone: timezone })
+  );
+
+  const currentDay = localTime.getDate();
 
   const daysUntilChristmas = 25 - currentDay;
 

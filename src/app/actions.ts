@@ -1,16 +1,35 @@
 "use server";
 
+import { differenceInCalendarDays } from "date-fns";
 import { format } from "date-fns-tz";
 
-export async function getServerTime() {
-  // Get the current date and time in UTC
-  const nowUtc = new Date();
+type ChristmasInfo = {
+  currentDay: number;
+  daysUntilChristmas: number;
+  isChristmas: boolean;
+}
 
-  // Format the date to a readable string, adjusted for Brasília time (BRT)
+export async function getChristmasInfo(): Promise<ChristmasInfo> {
+  // Get current date in São Paulo timezone
+  const nowUtc = new Date();
   const formattedDate = format(nowUtc, "yyyy-MM-dd HH:mm:ssXXX", {
     timeZone: "America/Sao_Paulo",
   });
+  const currentDate = new Date(formattedDate);
 
-  // Return the actual Date object, not the formatted string
-  return new Date(formattedDate);
+  // Get current day
+  const currentDay = currentDate.getDate();
+
+  // Calculate days until Christmas
+  const christmasDate = new Date(currentDate.getFullYear(), 11, 25);
+  const daysUntilChristmas = differenceInCalendarDays(christmasDate, currentDate);
+
+  // Check if it's Christmas
+  const isChristmas = currentDate.getDate() === 25 && currentDate.getMonth() === 11;
+
+  return {
+    currentDay,
+    daysUntilChristmas,
+    isChristmas
+  };
 }

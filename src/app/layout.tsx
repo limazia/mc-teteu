@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 
 import { ClientOnly } from "@/components/client-only";
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased flex flex-col justify-center items-center">
         <ClientOnly>{children}</ClientOnly>
+        <Analytics />
       </body>
     </html>
   );

@@ -1,14 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { differenceInCalendarDays } from "date-fns";
-
-import { getServerTime } from "./actions";
-import { cn } from "@/utils/cn";
-
 import { EmojiRain } from "@/components/emoji-rain";
 import { AudioPlayer } from "@/components/audio-player";
 import { Background } from "@/components/background";
+import { getChristmasInfo } from "./actions";
 
 export default function Page() {
   const [currentDay, setCurrentDay] = useState<number>(0);
@@ -16,34 +12,22 @@ export default function Page() {
   const [isChristmas, setIsChristmas] = useState<boolean>(false);
 
   useEffect(() => {
-    async function isChristmasDay() {
-      const date = await getServerTime();
-      setCurrentDay(date.getDate());
-
-      const christmasDate = new Date(date.getFullYear(), 11, 25);
-      const daysLeft = differenceInCalendarDays(christmasDate, date);
-      setDaysUntilChristmas(daysLeft);
-
-      if (date.getDate() === 25 && date.getMonth() === 11) {
-        setIsChristmas(true);
-      }
+    async function checkChristmas() {
+      const { currentDay, daysUntilChristmas, isChristmas } = await getChristmasInfo();
+      setCurrentDay(currentDay);
+      setDaysUntilChristmas(daysUntilChristmas);
+      setIsChristmas(isChristmas);
     }
 
-    isChristmasDay();
+    checkChristmas();
   }, []);
 
   return (
     <main className="flex flex-col items-center justify-center px-14 max-w-4xl">
       {isChristmas && <EmojiRain />}
 
-      <div
-        className={cn(
-          "flex flex-col items-center py-8",
-          isChristmas ? "space-y-32" : "space-y-8"
-        )}
-      >
+      <div className={`flex flex-col items-center py-8 ${isChristmas ? "space-y-32" : "space-y-8"}`}>
         <AudioPlayer />
-
         <Background currentDay={currentDay} isChristmas={isChristmas} />
 
         {!isChristmas && (

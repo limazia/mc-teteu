@@ -15,14 +15,14 @@ const { daysUntilChristmas } = await getChristmasInfo();
 
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",
-  description: "Faltam poucos dias para o MC Teteu descongelar!",
+  description: "Veja quantos dias faltam para o MC Teteu descongelar!",
   icons: {
     icon: "/favicon.ico",
   },
   metadataBase: new URL(host!),
   openGraph: {
     title: "MC Teteu no Natal",
-    description: "Faltam poucos dias para o MC Teteu descongelar!",
+    description: "Veja quantos dias faltam para o MC Teteu descongelar!",
     url: host,
     images: `${host}/api/og?title=Faltam ${daysUntilChristmas} dias para o Mc Teteu descongelar!`,
     type: "website",

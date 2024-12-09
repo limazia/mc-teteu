@@ -13,7 +13,7 @@ const { daysUntilChristmas } = await getChristmasInfo();
 
 const title = `Faltam ${daysUntilChristmas} dias para o Mc Teteu descongelar!`;
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://mcteteunonatal.com.br";
+  process.env.NEXT_PUBLIC_VERCEL_URL || "https://teteu.site";
 
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",

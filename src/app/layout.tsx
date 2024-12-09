@@ -9,29 +9,37 @@ import { getChristmasInfo } from "./(home)/actions";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-const host = process.env.NEXT_PUBLIC_VERCEL_URL;
-
 const { daysUntilChristmas } = await getChristmasInfo();
+
+const title = `Faltam ${daysUntilChristmas} dias para o Mc Teteu descongelar!`;
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://mcteteunonatal.com.br";
 
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",
   description: "Veja quantos dias faltam para o MC Teteu descongelar!",
-  icons: {
-    icon: "/favicon.ico",
-  },
-  metadataBase: new URL(host!),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "MC Teteu no Natal",
     description: "Veja quantos dias faltam para o MC Teteu descongelar!",
-    url: host,
-    images: `${host}/api/og?title=Faltam ${daysUntilChristmas} dias para o Mc Teteu descongelar!`,
-    type: "website",
+    url: siteUrl,
+    siteName: "MC Teteu no Natal",
     locale: "pt_BR",
+    type: "website",
+    images: [
+      {
+        url: `/api/og?title=${encodeURIComponent(title)}&t=${Date.now()}`,
+        width: 1201,
+        height: 675,
+        alt: title,
+      },
+    ],
   },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: true,
+  twitter: {
+    card: "summary_large_image",
+    title: "MC Teteu no Natal",
+    description: "Veja quantos dias faltam para o MC Teteu descongelar!",
+    images: [`/api/og?title=${encodeURIComponent(title)}&t=${Date.now()}`],
   },
 };
 

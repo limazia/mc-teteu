@@ -1,14 +1,15 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 
-export const runtime = "edge";
+export const config = {
+  runtime: "edge",
+};
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const host = process.env.NEXT_PUBLIC_VERCEL_URL;
 
-    // ?title=<title>
     const hasTitle = searchParams.has("title");
     const title = hasTitle
       ? searchParams.get("title")?.slice(0, 100)
@@ -29,27 +30,44 @@ export async function GET(request: NextRequest) {
             textAlign: "center",
             justifyContent: "center",
             alignItems: "center",
+            position: "relative",
           }}
         >
           <div
             style={{
-              fontSize: 60,
-              fontStyle: "normal",
-              letterSpacing: "-0.025em",
-              color: "white",
-              marginTop: 30,
-              padding: "0 120px",
-              lineHeight: 1.4,
-              whiteSpace: "pre-wrap",
-              textShadow:
-                "#000 2px -2px 3px, #000 -2px 2px 3px, #000 2px 2px 3px, #000 -2px -2px 3px",
+              position: "absolute",
+              bottom: 0,
+              width: "100%",
+              height: 60,
+              backgroundColor: "black",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {title}
+            <span
+              style={{
+                fontSize: 30,
+                color: "white",
+                lineHeight: 1.4,
+                textAlign: "center",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                padding: "0 20px",
+                textTransform: "uppercase",
+              }}
+            >
+              {title}
+            </span>
           </div>
         </div>
       ),
       {
+        status: 200,
+        headers: {
+          "Cache-Control": "s-maxage=3600",
+        },
         width: 1201,
         height: 675,
       }

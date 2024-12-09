@@ -5,8 +5,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 
 import { ClientOnly } from "@/components/client-only";
+import { getChristmasInfo } from "./(home)/actions";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+const host = process.env.NEXT_PUBLIC_VERCEL_URL;
+
+const { daysUntilChristmas } = await getChristmasInfo();
 
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",
@@ -14,12 +19,12 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  metadataBase: new URL("https://www.teteu.site"),
+  metadataBase: new URL(host!),
   openGraph: {
     title: "MC Teteu no Natal",
     description: "Faltam poucos dias para o MC Teteu descongelar!",
-    url: "https://www.teteu.site",
-    images: "/og-image.png",
+    url: host,
+    images: `${host}/api/og?title=Faltam ${daysUntilChristmas} dias para o Mc Teteu descongelar!`,
     type: "website",
     locale: "pt_BR",
   },

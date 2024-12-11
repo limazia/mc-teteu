@@ -1,17 +1,15 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 
+import { getChristmasInfo } from "@/app/(home)/actions";
+
 export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const host = process.env.NEXT_PUBLIC_VERCEL_URL;
+    const { daysUntilChristmas } = await getChristmasInfo();
 
-    const hasTitle = searchParams.has("title");
-    const title = hasTitle
-      ? searchParams.get("title")?.slice(0, 100)
-      : "MC Teteu no Natal";
+    const host = process.env.NEXT_PUBLIC_VERCEL_URL;
 
     return new ImageResponse(
       (
@@ -56,7 +54,7 @@ export async function GET(request: NextRequest) {
                 textTransform: "uppercase",
               }}
             >
-              {title}
+              Faltam {daysUntilChristmas} dias para o Mc Teteu descongelar!
             </span>
           </div>
         </div>

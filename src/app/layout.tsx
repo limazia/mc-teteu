@@ -5,15 +5,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 
 import { ClientOnly } from "@/components/client-only";
-import { getChristmasInfo } from "./(home)/actions";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-const { daysUntilChristmas } = await getChristmasInfo();
-
-const title = `Faltam ${daysUntilChristmas} dias para o Mc Teteu descongelar!`;
-const siteUrl =
-  process.env.NEXT_PUBLIC_VERCEL_URL || "https://teteu.site";
+const siteUrl = process.env.NEXT_PUBLIC_VERCEL_URL || "https://teteu.site";
 
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",
@@ -28,10 +23,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `/api/og?title=${encodeURIComponent(title)}&t=${Date.now()}`,
+        url: "/api/og",
         width: 1201,
         height: 675,
-        alt: title,
+        alt: "MC Teteu Triggered",
       },
     ],
   },
@@ -39,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MC Teteu no Natal",
     description: "Veja quantos dias faltam para o MC Teteu descongelar!",
-    images: [`/api/og?title=${encodeURIComponent(title)}&t=${Date.now()}`],
+    images: ["api/og"],
   },
 };
 

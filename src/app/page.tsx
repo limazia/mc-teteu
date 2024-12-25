@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { differenceInCalendarDays } from "date-fns";
 
 import { cn } from "@/utils/cn";
@@ -8,30 +8,28 @@ import { cn } from "@/utils/cn";
 import { Background } from "@/components/background";
 import { AudioPlayer } from "@/components/audio-player";
 import { EmojiRain } from "@/components/emoji-rain";
+import { getServerTime } from "./actions";
 
-export default function HomePage() {
+export default function Page() {
   const [currentDay, setCurrentDay] = useState<number>(0);
   const [daysUntilChristmas, setDaysUntilChristmas] = useState<number>(0);
   const [isChristmas, setIsChristmas] = useState<boolean>(false);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
   useEffect(() => {
-    const serverDate = new Date();
-    setCurrentDay(serverDate.getDate());
+    async function isChristmasDay() {
+      const date = await getServerTime();
+      setCurrentDay(date.getDate());
 
-    const christmasDate = new Date(serverDate.getFullYear(), 11, 25);
-    const daysLeft = differenceInCalendarDays(christmasDate, serverDate);
-    setDaysUntilChristmas(daysLeft);
+      const christmasDate = new Date(date.getFullYear(), 11, 25);
+      const daysLeft = differenceInCalendarDays(christmasDate, date);
+      setDaysUntilChristmas(daysLeft);
 
-    if (serverDate.getDate() === 25 && serverDate.getMonth() === 11) {
-      setIsChristmas(true);
-
-      // Tocar o som de foguete quando for Natal
-      if (audioRef.current) {
-        audioRef.current.play();
+      if (date.getDate() === 25 && date.getMonth() === 11) {
+        setIsChristmas(true);
       }
     }
+
+    isChristmasDay();
   }, []);
 
   return (
@@ -56,8 +54,6 @@ export default function HomePage() {
             dias para o Mc Teteu descongelar! 🎤❄️
           </div>
         )}
-
-        <audio ref={audioRef} src="/foguete.mp3" />
       </div>
     </>
   );

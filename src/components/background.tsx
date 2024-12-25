@@ -13,9 +13,12 @@ export function Background({ currentDay, isChristmas }: BackgroundProps) {
     e.preventDefault();
   };
 
+  const image = images[currentDay] || images["default"];
+
   return (
     <motion.div
-      className={cn("w-full rounded-md z-[99999]", 
+      className={cn(
+        "w-full rounded-md z-[99999]",
         isChristmas && "animate-bounce-christmas"
       )}
       initial={{ filter: "blur(20px)", opacity: 0 }}
@@ -27,7 +30,7 @@ export function Background({ currentDay, isChristmas }: BackgroundProps) {
       }}
     >
       <motion.img
-        src={`photos/${images[currentDay]}.png`}
+        src={`photos/${image}.png`}
         alt="MC Teteu"
         className="w-full object-contain rounded-md"
         onContextMenu={handleRightClick}

@@ -1,4 +1,8 @@
-export const images: { [key: number]: string } = {
+interface Image {
+  [key: number | string]: string;
+}
+
+export const images: Image = {
   4: "ddf04598-2922-4a95-8a60-026d928d1c73",
   5: "242fb8a8-221a-410a-813e-ed3e1cfd8ac8",
   6: "6ea69374-9ba8-435d-8106-7d69a7a1d7dc",
@@ -21,4 +25,5 @@ export const images: { [key: number]: string } = {
   23: "d2fdebfe-c122-4c06-85f1-c712a3461456",
   24: "ad3f6368-d17e-4346-bc91-e9917a0d90bc",
   25: "happy-christmas",
+  "default": "teteu"
 };

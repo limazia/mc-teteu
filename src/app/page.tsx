@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import { differenceInCalendarDays } from "date-fns";
 
+import { getServerTime } from "./actions";
 import { cn } from "@/utils/cn";
 
-import { Background } from "@/components/background";
-import { AudioPlayer } from "@/components/audio-player";
 import { EmojiRain } from "@/components/emoji-rain";
-import { getServerTime } from "./actions";
+import { AudioPlayer } from "@/components/audio-player";
+import { Background } from "@/components/background";
 
 export default function Page() {
   const [currentDay, setCurrentDay] = useState<number>(0);
@@ -33,8 +33,9 @@ export default function Page() {
   }, []);
 
   return (
-    <>
+    <main className="flex flex-col items-center justify-center px-14 max-w-4xl">
       {isChristmas && <EmojiRain />}
+
       <div
         className={cn(
           "flex flex-col items-center py-8",
@@ -55,6 +56,6 @@ export default function Page() {
           </div>
         )}
       </div>
-    </>
+    </main>
   );
 }

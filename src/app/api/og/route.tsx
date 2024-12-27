@@ -1,77 +1,86 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-
-import { getChristmasInfo } from "@/app/(home)/actions";
+import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
+export const alt = "Countdown para o Natal";
+export const size = {
+  width: 1201,
+  height: 675,
+};
+
+export const contentType = "image/png";
+
+// Add revalidation
+export const revalidate = 86400; // 24 hours in seconds
+
+const host = process.env.NEXT_PUBLIC_VERCEL_URL;
 
 export async function GET(request: NextRequest) {
-  try {
-    const { daysUntilChristmas } = await getChristmasInfo();
+  // Add cache control headers
+  const response = await generateOGResponse();
+  
+  response.headers.set(
+    'Cache-Control',
+    'public, s-maxage=86400, stale-while-revalidate=86400'
+  );
+  
+  return response;
+}
 
-    const host = process.env.NEXT_PUBLIC_VERCEL_URL;
+async function generateOGResponse() {
+  const { ogText } = getChristmasCountdown();
 
-    return new ImageResponse(
-      (
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          display: "flex",
+          fontSize: 40,
+          color: "black",
+          backgroundImage: `url(${host}/og-image.png)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          width: "100%",
+          height: "100%",
+          textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "relative",
+        }}
+      >
         <div
           style={{
-            display: "flex",
-            fontSize: 40,
-            color: "black",
-            backgroundImage: `url(${host}/og-image.png)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            position: "absolute",
+            bottom: 0,
             width: "100%",
-            height: "100%",
-            textAlign: "center",
+            height: 60,
+            backgroundColor: "black",
+            display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            position: "relative",
           }}
         >
-          <div
+          <span
             style={{
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: 60,
-              backgroundColor: "black",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              fontSize: 30,
+              color: "white",
+              lineHeight: 1.4,
+              textAlign: "center",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              padding: "0 20px",
+              textTransform: "uppercase",
             }}
           >
-            <span
-              style={{
-                fontSize: 30,
-                color: "white",
-                lineHeight: 1.4,
-                textAlign: "center",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                padding: "0 20px",
-                textTransform: "uppercase",
-              }}
-            >
-              Faltam {daysUntilChristmas} dias para o Mc Teteu descongelar!
-            </span>
-          </div>
+            {ogText}
+          </span>
         </div>
-      ),
-      {
-        status: 200,
-        headers: {
-          "Cache-Control": "s-maxage=3600",
-        },
-        width: 1201,
-        height: 675,
-      }
-    );
-  } catch (e: any) {
-    console.log(`${e.message}`);
-    return new Response(`Falha ao gerar a imagem`, {
-      status: 500,
-    });
-  }
+      </div>
+    ),
+    {
+      ...size,
+    }
+  );
 }

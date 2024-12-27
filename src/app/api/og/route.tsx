@@ -4,7 +4,7 @@ import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
 export const revalidate = 86400;
-export const size = {
+const size = {
   width: 1201,
   height: 675,
 };
@@ -73,7 +73,12 @@ async function generateOGResponse() {
       </div>
     ),
     {
-      ...size,
+      status: 200,
+      headers: {
+        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=86400",
+      },
+      width: 1201,
+      height: 675,
     }
   );
 }

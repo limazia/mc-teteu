@@ -10,6 +10,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const siteUrl = process.env.NEXT_PUBLIC_VERCEL_URL || "https://teteu.site";
 
+const ogImageUrl = `/api/og?t=${new Date().toISOString().split("T")[0]}`;
+
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",
   description: "Veja quantos dias faltam para o MC Teteu descongelar!",
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/api/og",
+        url: ogImageUrl,
         width: 1201,
         height: 675,
         alt: "MC Teteu Triggered",
@@ -34,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MC Teteu no Natal",
     description: "Veja quantos dias faltam para o MC Teteu descongelar!",
-    images: ["api/og"],
+    images: [ogImageUrl],
   },
 };
 

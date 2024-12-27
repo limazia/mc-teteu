@@ -1,59 +1,57 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+"use client";
 
-import { images } from "@/utils/images";
-import { cn } from "@/utils/cn";
+import { useEffect, useState } from "react";
 
-interface BackgroundProps {
-  currentDay: number;
-  isChristmas: boolean;
-}
+import Image from "next/image";
+import { unstable_noStore as noStore } from "next/cache";
 
-export function Background({ currentDay, isChristmas }: BackgroundProps) {
-  const [isLoading, setIsLoading] = useState(true);
+import { getChristmasCountdown } from "@/utils/christmas";
+import { getImageForDate } from "@/utils/images";
 
-  const handleRightClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
+export function Background() {
+  const [image, setImage] = useState<string | null>(null);
+  const [countdownText, setCountdownText] = useState("");
 
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
+  useEffect(() => {
+    // Atualiza o countdown
+    const updateCountdown = () => {
+      const { countdownText } = getChristmasCountdown();
+      setCountdownText(countdownText);
+    };
 
-  const image = images[currentDay] || images["default"];
+    // Atualiza imediatamente e depois a cada segundo
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    async function getCurrentImage() {
+      noStore();
+      const now = new Date();
+      const image = getImageForDate(now);
+
+      setImage(image);
+    }
+
+    getCurrentImage();
+  }, []);
 
   return (
-    <motion.div
-      className={cn(
-        "w-full rounded-md z-[99999] relative",
-        isChristmas && "animate-bounce-christmas"
-      )}
-      initial={{ filter: "blur(20px)", opacity: 0 }}
-      animate={{ filter: "blur(0px)", opacity: 1 }}
-      transition={{
-        duration: 2,
-        ease: "easeOut",
-        repeatType: "mirror",
-      }}
-    >
-      {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-md">
-          <span className="text-white text-lg">Carregando...</span>
-        </div>
-      )}
-      
-      <motion.img
-        src={`photos/${image}.png`}
-        alt="MC Teteu"
-        className="w-full object-contain rounded-md"
-        onContextMenu={handleRightClick}
-        onLoad={handleImageLoad}
-        initial={{ filter: "contrast(0.5) brightness(0.5)" }}
-        animate={{
-          filter: "contrast(1) brightness(1)",
-        }}
-        transition={{ duration: 2, ease: "easeOut" }}
+    <div className="w-full space-y-6">
+      <Image
+        src={`/photos/${image}`}
+        alt="Imagem do dia"
+        width={1920}
+        height={1080}
+        className="w-full h-full object-cover rounded-xl"
+        priority
       />
-    </motion.div>
+
+      <div className="text-center text-4xl font-bold">
+        <span className="text-red-500 animate-pulse">{countdownText}</span>
+      </div>
+    </div>
   );
 }

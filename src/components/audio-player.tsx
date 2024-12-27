@@ -1,11 +1,16 @@
+"use client";
+
 import { useState, useRef } from "react";
+import { Pause, Play } from "lucide-react";
+
+import { Button } from "./ui/button";
 
 export function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [animationState, setAnimationState] = useState<string>("paused");
 
-  const togglePlay = () => {
+  function togglePlay() {
     if (!audioRef.current) return;
 
     if (isPlaying) {
@@ -17,26 +22,42 @@ export function AudioPlayer() {
     }
 
     setIsPlaying(!isPlaying);
-  };
+  }
 
   return (
-    <div className="w-full flex flex-col items-center p-6 bg-white rounded-md space-y-4 relative overflow-hidden">
-      <div className="absolute top-0 left-0 opacity-20">
-        <div className="ocean" style={{ animationPlayState: animationState }} />
+    <div className="fixed left-5 top-5 md:top-auto md:bottom-5 z-50">
+      <div className="w-[280px] flex flex-col items-center p-3 bg-white border rounded-md relative overflow-hidden shadow-md">
+        <div className="absolute top-0 left-0 opacity-20">
+          <div
+            className="ocean"
+            style={{ animationPlayState: animationState }}
+          />
+        </div>
+
+        <div className="flex items-center gap-3 w-full z-50">
+          <img
+            src="thumbnail.jpg"
+            alt="MC Teteu - Dingo Bell"
+            className="w-14 h-14 object-cover rounded-md "
+          />
+
+          <div className="flex flex-col min-w-0 flex-1">
+            <span className="text-sm text-gray-500 truncate">MC Teteu</span>
+            <span className="text-base font-bold truncate">Dingo Bell</span>
+          </div>
+
+          <Button size="icon" onClick={togglePlay}>
+            {isPlaying ? (
+              <Pause className="h-4 w-4" />
+            ) : (
+              <Play className="h-4 w-4" />
+            )}
+            <span className="sr-only">{isPlaying ? "Pausar" : "Tocar"}</span>
+          </Button>
+        </div>
+
+        <audio ref={audioRef} src="teteu.mp3" />
       </div>
-
-      <span className="text-2xl font-bold text-center relative z-10">
-        MC Teteu - Dingo Bell
-      </span>
-
-      <audio ref={audioRef} src="teteu.mp3" className="mb-4" />
-
-      <button
-        onClick={togglePlay}
-        className="flex items-center gap-1.5 px-6 py-2 bg-blue-500 text-white rounded-full transition ease-linear duration-300 hover:bg-blue-600 relative z-10"
-      >
-        {isPlaying ? "Pausar" : "Tocar"}
-      </button>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import { NextRequest } from "next/server";
 import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
-export const contentType = "image/png";
 export const revalidate = 86400;
 export const size = {
   width: 1201,

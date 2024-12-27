@@ -3,33 +3,27 @@ import { NextRequest } from "next/server";
 import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
-export const alt = "Countdown para o Natal";
+export const contentType = "image/png";
+export const revalidate = 86400;
 export const size = {
   width: 1201,
   height: 675,
 };
 
-export const contentType = "image/png";
-
-// Add revalidation
-export const revalidate = 86400; // 24 hours in seconds
-
-const host = process.env.NEXT_PUBLIC_VERCEL_URL;
-
 export async function GET(request: NextRequest) {
-  // Add cache control headers
   const response = await generateOGResponse();
-  
+
   response.headers.set(
-    'Cache-Control',
-    'public, s-maxage=86400, stale-while-revalidate=86400'
+    "Cache-Control",
+    "public, s-maxage=86400, stale-while-revalidate=86400"
   );
-  
+
   return response;
 }
 
 async function generateOGResponse() {
   const { ogText } = getChristmasCountdown();
+  const host = process.env.NEXT_PUBLIC_VERCEL_URL;
 
   return new ImageResponse(
     (

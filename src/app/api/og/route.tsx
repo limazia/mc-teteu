@@ -3,14 +3,14 @@ import { NextRequest } from "next/server";
 import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
-export const revalidate = 86400;
+export const revalidate = 3600;
 
 export async function GET(request: NextRequest) {
   const response = await generateOGResponse();
 
   response.headers.set(
     "Cache-Control",
-    "public, s-maxage=86400, stale-while-revalidate=86400"
+    "public, s-maxage=3600, stale-while-revalidate=3600"
   );
 
   return response;
@@ -71,7 +71,7 @@ async function generateOGResponse() {
     {
       status: 200,
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=86400",
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=3600",
       },
       width: 1201,
       height: 675,

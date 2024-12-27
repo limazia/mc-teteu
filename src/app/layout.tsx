@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const siteUrl = process.env.NEXT_PUBLIC_VERCEL_URL || "https://teteu.site";
 
-const ogImageUrl = `/api/og?t=${new Date().toISOString().split("T")[0]}`;
+const ogImageUrl = `/api/og?t=${Math.floor(Date.now() / 3600000)}`;
 
 export const metadata: Metadata = {
   title: "MC Teteu no Natal",

@@ -1,126 +1,63 @@
-import fs from "fs";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
-import { format, addDays, startOfMonth, endOfMonth } from "date-fns";
+import fs from 'fs';
+import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
-const dataDir = path.resolve("data");
-const assetsDir = path.resolve(dataDir, "assets/teteu");
-const utilsDir = path.resolve(dataDir, "utils"); // Diretório utils
-const imagesFilePath = path.resolve(utilsDir, "images.ts"); // Caminho do arquivo images.ts
+// Script para renomear e gerar o arquivo de mapeamento
+const dataDir = path.resolve('data');
+const outputMapping: { [key: string]: string } = {};
+const imageMapping: { [key: number]: string } = {};
 
-// Função para criar o diretório caso não exista
-function createDirIfNotExist(dir: string) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+// Lê todos os arquivos do diretório
+const files = fs.readdirSync(dataDir)
+  .filter(file => file.startsWith('image_day_'))
+  .sort((a, b) => {
+    const numA = parseInt(a.match(/\d+/)?.[0] || '0');
+    const numB = parseInt(b.match(/\d+/)?.[0] || '0');
+    return numA - numB;
+  });
+
+// Renomeia cada arquivo e cria o mapeamento
+files.forEach(file => {
+  const dayNumber = parseInt(file.match(/\d+/)?.[0] || '0');
+  const uuid = uuidv4();
+  const newName = `image-${dayNumber}${uuid}.png`;
+  
+  // Renomeia o arquivo
+  fs.renameSync(
+    path.join(dataDir, file),
+    path.join(dataDir, newName)
+  );
+  
+  // Guarda o mapeamento
+  outputMapping[newName] = file;
+  imageMapping[dayNumber] = newName;
+});
+
+// Gera o arquivo de mapeamento TypeScript
+const mappingContent = `
+// Mapeamento de imagens com UUID
+export const imageMapping: { [key: number]: string } = ${JSON.stringify(imageMapping, null, 2)};
+
+// Função para obter a imagem do dia
+export function getImageForDate(date: Date): string {
+  const start = new Date(date.getFullYear(), 0, 1);
+  const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const dayOfYear = Math.floor((today.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+  
+  // Se for após 25 de dezembro, mostra a última imagem
+  if (date.getMonth() === 11 && date.getDate() > 25) {
+    return imageMapping[359];
   }
-}
-
-// Função para renomear e salvar as imagens
-async function renameAndSaveImages() {
-  createDirIfNotExist(assetsDir);
-
-  // Caminho das imagens geradas, assumindo que já estão na pasta "data"
-  const imageFiles = fs
-    .readdirSync(dataDir)
-    .filter((file) => file.startsWith("image_day_"));
-
-  for (let i = 0; i < imageFiles.length; i++) {
-    const dayImagePath = path.resolve(dataDir, imageFiles[i]);
-
-    // Gerar um UUID para o arquivo
-    const newUuid = uuidv4();
-
-    // Renomear a imagem com a sequência (dia) e o UUID completo
-    const newImageName = `${i + 1}-${newUuid}.png`; // Agora inclui o UUID completo
-    const newImagePath = path.resolve(assetsDir, newImageName);
-
-    // Mover a imagem renomeada para o diretório "teteu"
-    fs.renameSync(dayImagePath, newImagePath);
+  
+  // Se for antes de 1 de janeiro, mostra a primeira imagem
+  if (dayOfYear < 1) {
+    return imageMapping[1];
   }
+  
+  return imageMapping[dayOfYear] || imageMapping[1];
 }
-
-// Gerar a estrutura do objeto de imagens
-export const images: { [key: string]: { [key: number]: string } } = {
-  january: {},
-  february: {},
-  march: {},
-  april: {},
-  may: {},
-  june: {},
-  july: {},
-  august: {},
-  september: {},
-  october: {},
-  november: {},
-  december: {},
-};
-
-// Função para preencher o objeto de imagens com os UUIDs
-async function populateImages() {
-  const files = fs.readdirSync(assetsDir);
-
-  // Usar date-fns para calcular os dias de cada mês
-  const monthNames = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
-  ];
-
-  // Processar os arquivos de imagem
-  for (let i = 0; i < files.length; i++) {
-    const fileName = files[i];
-    const [dayStr, uuid] = fileName.split("-");
-    const dayNumber = parseInt(dayStr);
-
-    // Encontrar o mês para o dia
-    let currentDay = new Date(2024, 0, dayNumber); // Supondo que estamos no ano de 2024
-    const monthIndex = currentDay.getMonth();
-    const monthName = monthNames[monthIndex];
-
-    // Calcular o número máximo de dias do mês
-    const startDate = startOfMonth(currentDay);
-    const endDate = endOfMonth(currentDay);
-    const daysInMonth = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
-
-    if (dayNumber <= daysInMonth) {
-      // Atribuir o UUID à chave do mês e do dia
-      if (images[monthName]) {
-        images[monthName][dayNumber] = uuid;
-      }
-    }
-  }
-}
-
-// Função para escrever o objeto images no arquivo images.ts
-async function writeImagesToFile() {
-  createDirIfNotExist(utilsDir); // Criar o diretório "utils" se não existir
-
-  const imagesContent = `
-export const images = ${JSON.stringify(images, null, 2)};
 `;
 
-  fs.writeFileSync(imagesFilePath, imagesContent);
-  console.log("Arquivo images.ts criado com sucesso!");
-}
+fs.writeFileSync('./imageMapping.ts', mappingContent);
 
-// Função para rodar as operações
-async function run() {
-  await renameAndSaveImages();
-  await populateImages();
-  await writeImagesToFile();
-  console.log("Imagens renomeadas e estrutura gerada.");
-}
-
-// Rodar as funções
-run().catch((err) => {
-  console.error("Erro ao processar as imagens:", err);
-});
+console.log('Arquivos renomeados e mapeamento gerado com sucesso!');

@@ -9,8 +9,8 @@ async function generateImages(targetPath: string, maskPath: string) {
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
   // Carregar as imagens de entrada
-  const targetImage = sharp(targetPath).toFormat("png"); // Garantir formato PNG
-  const maskImage = sharp(maskPath).toFormat("png"); // Garantir formato PNG
+  const targetImage = sharp(targetPath).toFormat("png");
+  const maskImage = sharp(maskPath).toFormat("png");
 
   const { width: targetWidth, height: targetHeight } =
     await targetImage.metadata();
@@ -38,38 +38,46 @@ async function generateImages(targetPath: string, maskPath: string) {
   if (!fs.existsSync(resizedMaskPath)) {
     await maskImage
       .resize({ width: targetWidth, height: targetHeight })
-      .ensureAlpha(0.8)
       .toFile(resizedMaskPath);
   }
 
-  // Carregar a máscara redimensionada como buffer
-  const resizedMaskBuffer = await sharp(resizedMaskPath).toBuffer();
+  // Carregar a máscara redimensionada
+  const resizedMask = sharp(resizedMaskPath);
 
   for (let day = 0; day <= daysBetween; day++) {
     const maskHeightCurrent = Math.ceil(
       targetHeight - day * heightDecreasePerDay
     );
 
-    if (maskWidth > targetWidth || maskHeight > targetHeight) {
-      // Criar a composição da imagem final
-      const finalImage = await targetImage
-        .composite([
-          {
-            input: resizedMaskBuffer,
-            top: targetHeight - maskHeightCurrent,
-            left: 0,
-          }, // Fixar o "bottom"
-        ])
-        .png()
-        .toBuffer();
+    // Criar uma máscara temporária com a altura atual
+    const currentMaskBuffer = await resizedMask
+      .extract({
+        left: 0,
+        top: 0,
+        width: targetWidth,
+        height: maskHeightCurrent,
+      })
+      .toBuffer();
 
-      // Salvar a imagem no diretório
-      const outputFilePath = path.resolve(
-        outputDir,
-        `image_day_${day + 1}.png`
-      );
-      fs.writeFileSync(outputFilePath, finalImage);
-    }
+    // Criar a composição da imagem final
+    const finalImage = await sharp(await targetImage.toBuffer())
+      .composite([
+        {
+          input: currentMaskBuffer,
+          top: targetHeight - maskHeightCurrent,
+          left: 0,
+          blend: 'lighten'  
+        },
+      ])
+      .png()
+      .toBuffer();
+
+    // Salvar a imagem no diretório
+    const outputFilePath = path.resolve(
+      outputDir,
+      `image_day_${day + 1}.png`
+    );
+    fs.writeFileSync(outputFilePath, finalImage);
 
     bar.tick();
   }
@@ -78,8 +86,8 @@ async function generateImages(targetPath: string, maskPath: string) {
 }
 
 // Caminhos dos arquivos
-const targetImagePath = path.resolve(__dirname, "target.png"); // Altere para o caminho real
-const maskImagePath = path.resolve(__dirname, "mask.png"); // Altere para o caminho real
+const targetImagePath = path.resolve(__dirname, "target.png"); // Imagem que será revelada
+const maskImagePath = path.resolve(__dirname, "mask.png"); // Máscara de gelo
 
 generateImages(targetImagePath, maskImagePath).catch((err) => {
   console.error("Erro ao gerar as imagens:", err);

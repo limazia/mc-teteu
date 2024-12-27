@@ -4,10 +4,6 @@ import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
 export const revalidate = 86400;
-const size = {
-  width: 1201,
-  height: 675,
-};
 
 export async function GET(request: NextRequest) {
   const response = await generateOGResponse();

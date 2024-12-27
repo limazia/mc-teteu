@@ -1,5 +1,9 @@
 "use server";
 
+import { unstable_noStore as noStore } from "next/cache";
+
+import { getImageForDate } from "@/utils/images";
+
 type ChristmasInfo = {
   currentDay: number;
   daysUntilChristmas: number;
@@ -25,4 +29,11 @@ export async function getChristmasInfo(): Promise<ChristmasInfo> {
     daysUntilChristmas,
     isChristmas,
   };
+}
+
+export async function getCurrentImage() {
+  noStore();
+  const now = new Date();
+
+  return getImageForDate(now);
 }

@@ -37,7 +37,7 @@ async function generateOGResponse() {
           position: "relative",
         }}
       >
-        <div
+        {/* <div
           style={{
             position: "absolute",
             bottom: 0,
@@ -64,7 +64,7 @@ async function generateOGResponse() {
           >
             {ogText}
           </span>
-        </div>
+        </div> */}
       </div>
     ),
     {

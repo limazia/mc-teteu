@@ -17,23 +17,23 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "MC Teteu no Natal",
       description: "Veja quantos dias faltam para o MC Teteu descongelar!",
+      url: baseUrl,
+      siteName: "MC Teteu no Natal",
+      locale: "pt_BR",
+      type: "website",
       images: [
         {
           url: `${baseUrl}/api/og`,
-          width: 1201,
+          width: 1200,
           height: 675,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "MC Teteu no Natal",
-      description: "Veja quantos dias faltam para o MC Teteu descongelar!",
+      title: "Contagem Regressiva",
+      description: "Veja quantos dias faltam!",
       images: [`${baseUrl}/api/og`],
-    },
-    robots: {
-      index: true,
-      follow: true,
     },
   };
 }

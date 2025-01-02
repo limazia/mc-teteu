@@ -3,10 +3,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Força revalidação a cada 24 horas
-  experimental: {
-    staticGenerationTimeout: 120,
-  },
   
   webpack: (config) => {
     config.externals.push({

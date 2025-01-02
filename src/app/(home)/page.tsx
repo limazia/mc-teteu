@@ -1,17 +1,21 @@
-"use client";
+import { getChristmasInfo } from "./actions";
 
-import { AudioPlayer } from "@/components/audio-player";
-import { Background } from "@/components/background";
+import { AudioPlayer } from "./_components/audio-player";
+import { Background } from "./_components/background";
 import { BackgroundLines } from "@/components/ui/background-lines";
 
-export default function Page() {
+export default async function Page() {
+  const { isChristmas } = await getChristmasInfo();
+
   return (
-    <BackgroundLines className="flex min-h-screen items-center justify-center py-12 md:py-6 px-5">
+    <div className="flex min-h-screen items-center justify-center p-6">
       <AudioPlayer />
 
-      <div className="relative">
-        <Background />
-      </div>
-    </BackgroundLines>
+      <BackgroundLines>
+        <div className="relative">
+          <Background />
+        </div>
+      </BackgroundLines>
+    </div>
   );
 }

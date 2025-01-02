@@ -1,13 +1,22 @@
-import { ImageResponse } from "next/og";
+import { ImageResponse } from "@vercel/og";
+import { NextRequest } from "next/server";
+import { getChristmasCountdown } from "@/utils/christmas";
 
 export const runtime = "edge";
 
-export async function GET() {
-  const targetDate = new Date("2025-12-25");
-  const today = new Date();
-  const diffTime = targetDate.getTime() - today.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+export async function GET(request: NextRequest) {
+  const response = await generateOGResponse();
 
+  response.headers.set(
+    "Cache-Control",
+    "public, max-age=0, s-maxage=0, must-revalidate"
+  );
+
+  return response;
+}
+
+async function generateOGResponse() {
+  const { ogText } = getChristmasCountdown();
   const host = process.env.NEXT_PUBLIC_VERCEL_URL;
 
   return new ImageResponse(
@@ -28,7 +37,7 @@ export async function GET() {
           position: "relative",
         }}
       >
-        <div
+        {/* <div
           style={{
             position: "absolute",
             bottom: 0,
@@ -53,9 +62,9 @@ export async function GET() {
               textTransform: "uppercase",
             }}
           >
-            Faltam {diffDays} dias para o Natal! 🎄
+            {ogText}
           </span>
-        </div>
+        </div> */}
       </div>
     ),
     {

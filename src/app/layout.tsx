@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       images: [
         {
-          url: `${baseUrl}/api/og`,
+          url: "og-image.png",
           width: 1200,
           height: 675,
         },
@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Contagem Regressiva",
       description: "Veja quantos dias faltam!",
-      images: [`${baseUrl}/api/og`],
+      images: ["og-image.png"],
     },
   };
 }

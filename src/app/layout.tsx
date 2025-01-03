@@ -14,6 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "MC Teteu no Natal",
     description: "Veja quantos dias faltam para o MC Teteu descongelar!",
+    icons: {
+      icon: "/favicon.ico",
+    },
     openGraph: {
       title: "MC Teteu no Natal",
       description: "Veja quantos dias faltam para o MC Teteu descongelar!",
@@ -31,9 +34,13 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Contagem Regressiva",
-      description: "Veja quantos dias faltam!",
+      title: "MC Teteu no Natal",
+      description: "Veja quantos dias faltam para o MC Teteu descongelar!",
       images: ["og-image.png"],
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }
